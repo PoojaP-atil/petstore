@@ -117,3 +117,6 @@ def quantity(request):
 def summary(request):
     user = request.session['email']
     return render(request,"summary.html",{'session': user})
+
+def hello(request):
+    return HttpResponse("Hello world")
