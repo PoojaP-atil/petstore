@@ -1,0 +1,249 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+    background: rgb(178, 158, 90);;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.container {
+    background: #fff !important;
+    border: none;
+    border-radius: none
+}
+
+.abc {
+    padding-left: 40px
+}
+
+.pqr {
+    padding-right: 70px;
+    padding-top: 14px
+}
+
+.para {
+    float: right;
+    margin-right: 0;
+    padding-left: 80%;
+    top: 0
+}
+
+.fa-star {
+    color:rgb(178, 158, 90);
+}
+
+li {
+    list-style: none;
+    line-height: 50px;
+    color: #000
+}
+
+.col-md-2 {
+    padding-bottom: 20px;
+    font-weight: bold
+}
+
+.col-md-2 a {
+    text-decoration: none;
+    color: #000
+}
+
+.col-md-2.mio {
+    font-size: 12px;
+    padding-top: 7px
+}
+
+.des::after {
+    content: '.';
+    font-size: 0;
+    display: block;
+    border-radius: 20px;
+    height: 6px;
+    width: 55%;
+    background: rgb(178, 158, 90);
+    margin: 14px 0
+}
+
+.r4 {
+    padding-left: 25px
+}
+
+.btn-outline-warning {
+    border-radius: 0;
+    border: 2px solid rgb(178, 158, 90);
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    width: 70%
+}
+
+@media screen and (max-width: 620px) {
+    .container {
+        width: 98%;
+        display: flex;
+        flex-flow: column;
+        text-align: center
+    }
+
+    .des::after {
+        content: '.';
+        font-size: 0;
+        display: block;
+        border-radius: 20px;
+        height: 6px;
+        width: 35%;
+        background: rgb(178, 158, 90);
+        margin: 10px auto
+    }
+
+    .pqr {
+        text-align: center;
+        margin: 0 30px
+    }
+
+    .para {
+        text-align: center;
+        padding-left: 90px;
+        padding-top: 10px
+    }
+
+    .klo {
+        display: flex;
+        text-align: center;
+        margin: 0 auto;
+        margin-right: 40px
+    }
+}
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid" style="background-color: firebrick;">
+    <img src="{% static 'images/logo.png' %}" style="height: 90px; width: 200px;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item" style="padding-left: 20px; padding-top: auto;">
+          <a class="nav-link" href="#" style="color: rgb(211, 230, 247);"><b>HOME</b></a>
+        </li>
+        <li class="nav-item" style="padding-left: 20px;">
+          <a class="nav-link" href="#" style="color: rgb(211, 230, 247);"><b>ABOUT US</b></a>
+        </li>
+        <li class="nav-item" style="padding-left: 20px;">
+          <a class="nav-link" href="#" style="color: rgb(211, 230, 247);"><b>Welcome {{request.session.email}}</b></a>
+        </li>
+        <li class="nav-item" style="padding-left: 20px;">
+          <a class="nav-link" href="{% url 'services' %}" style="color: rgb(211, 230, 247);"><b>SERVICES</b></a>
+        </li>
+     
+      <form method='POST' class="d-flex ms-auto" style="padding-left: 20px;" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="padding-left: 20px; margin-top: 16px;" name="search_query">
+        <button class="btn btn-outline-light" type="submit" style="margin-top: 16px; ;">Search</button>
+      </form>
+      <li class="nav-item" style="padding-left: 20px;">
+        <a class="nav-link" href="{% url 'viewcart' %}" style="color: rgb(211, 230, 247);"><b>CART</b></a>
+      </li>
+      <li class="nav-item" style="padding-left: 20px;">
+        <a class="nav-link" href="#" style="color: rgb(211, 230, 247);"><b>LOGOUT</b></a>
+      </li>
+    </ul>
+    </div>
+  </div>
+</nav>
+{% block mycontent %}
+
+{% endblock %}
+<div class="container my-5">
+    <footer class="bg-primary text-center text-lg-start text-white">
+      <div class="container p-4">
+        <div class="row my-4">
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <div class="rounded-circle bg-white shadow-1-strong d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 150px; height: 150px; padding-left: 10px;">
+                <img src="{% static 'images/logo.png' %}" style="height: 200px; width: 300px;">
+                   
+            </div>
+            <p class="text-center">PAWS & PLAY</p>
+            <ul class="list-unstyled d-flex flex-row justify-content-center">
+              <li>
+                <a class="text-white px-2" href="#!">
+                  <i class="fab fa-facebook-square"></i>
+                </a>
+              </li>
+              <li>
+                <a class="text-white px-2" href="#!">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </li>
+              <li>
+                <a class="text-white ps-2" href="#!">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </li>
+            </ul>
+          </div>     
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase mb-4" style="color: firebrick;">Animals</h5>
+            <ul class="list-unstyled" style="background-color: rgb(178, 158, 90);">
+              <li class="mb-2">
+                <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Dogs</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Cats</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>How to adopt?</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Pets for adoption</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Help with talks</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase mb-4" style="color: firebrick;">Animals</h5>
+            <ul class="list-unstyled" style="background-color:rgb(178, 158, 90);">
+              <li class="mb-2">
+                <a href="#!" class="text-white" ><i class="fas fa-paw pe-3"></i>General information</a>
+              </li>
+              <li class="mb-2" >
+                <a href="#!" class="text-white" ><i class="fas fa-paw pe-3"></i>About the shelter</a>
+              </li>
+              <li class="mb-2" >
+                <a href="#!" class="text-white" ><i class="fas fa-paw pe-3"></i>Statistic data</a>
+              </li>
+              <li class="mb-2" >
+                <a href="#!" class="text-white" ><i class="fas fa-paw pe-3"></i>Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="color: firebrick;">
+            <h5 class="text-uppercase mb-4">Contact</h5>
+  
+            <ul class="list-unstyled" style="background-color: rgb(178, 158, 90);">
+              <li class="mb-2">
+                <p class="text-white"><i class="fas fa-map-marker-alt pe-2"></i>VASHI</p>
+              </li>
+              <li class="mb-2">
+                <p class="text-white"><i class="fas fa-phone pe-2"></i>+91 12345 67890</p>
+              </li>
+              <li class="mb-2">
+                <p class="text-white"><i class="fas fa-envelope pe-2 mb-0"></i>paws@gmail.com</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>   
+      <div class="text-center p-3" style="background-color: firebrick;">
+        © 2020 Copyright:
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

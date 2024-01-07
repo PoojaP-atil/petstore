@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+<html>
+    <body>
+{% block mycontent %}
+<div class="container py-4 my-4 mx-auto d-flex flex-column">
+    <div style="border: 10px solid rgb(255, 187, 0); margin-bottom: 20px; padding: 10px;">
+        <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+            <div class="row r1">
+            <div class="col-md-9 abc" style="padding-left: 240px; top: 5px;">
+                <center><h1 style="background-color: rgb(196, 244, 85); color: indigo; ">Name : {{petdetail.Name}}</h1></center>
+            </div>
+            
+            <div class="col-md-3 text-right pqr"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+        </div>
+    </div>
+    <div class="container-body mt-4"  style="background-color: #e5f8bd; border-radius: 5px;">
+        <div class="row r3">
+            <div class="col-md-5 p-0 klo">
+                <ul>
+                    <li><b>Breed : </b>{{petdetail.Breed}}</li>
+                    <li><b>Gender : </b>{{petdetail.Gender}}</li>
+                    <li><b>Species : </b>{{petdetail.Species}}</li>
+                    <li><b>Age : </b>{{petdetail.Age}} years</li>
+                    <li><b>Height : </b>{{petdetail.Height}} cm</li>
+                    <li><b>Weight : </b>{{petdetail.Weight}} kg</li>
+                    <li><b>Description : </b>{{petdetail.Description}}</li>
+                    <li><b>Price : </b>Rs. {{petdetail.Price}}</li>
+                </ul>
+            </div>
+            <div class="col-md-7" style="left: 100px; top: 5px; "> <img src="{{petdetail.Image.url}}" style="width:450px; height:450px;object-fit: contain; object-position: center;"> </div>
+        </div>
+    </div>
+    <div class="footer d-flex flex-column mt-5">
+        <div class="row r4">
+            <div class="col-md-2 myt "><a href="#">Review</a></div>
+            <div class="col-md-2 myt" style="margin-left: auto; left: 220px; top: auto;"><button type="button" class="btn btn-outline-warning"><a href="#">ADD TO CART</a></button></div>
+            <div class="col-md-2 myt " style="margin-left: auto; margin-right: auto;"><button type="button" class="btn btn-outline-warning" ><a href="#">BUY NOW</a></button></div>
+
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>
