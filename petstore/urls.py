@@ -34,6 +34,7 @@ urlpatterns = [
     path('cart1/',views.addcart,name="cart"),
     path('viewcart/',views.viewcart,name="viewcart"),
     path('quantity/',views.quantity,name="quant"),
+    path('summary/',views.summarypage,name="summary"),
 ]
 
 if settings.DEBUG:

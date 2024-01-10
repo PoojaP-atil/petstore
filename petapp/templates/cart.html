@@ -216,8 +216,11 @@ button:focus {
                         {% endfor %}
                       </tbody>
                     </table>
+                    <form method="POST" action="{% url 'summary' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="pid" value="{{i.productid.id}}">
                     <div class="text-center" ><button type="submit" class="btn btn-success flex-fill ms-1">Place Order</button></div>
-
+                    </form>
                   </div>
                 </div>
           

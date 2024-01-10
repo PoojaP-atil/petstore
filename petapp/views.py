@@ -114,9 +114,12 @@ def quantity(request):
     cartobjdisplay = cart.objects.filter(customerid = custobj.id)
     return render(request,'cart.html',{'session': user,'petobj':cartobjdisplay})
 
-def summary(request):
+def summarypage(request):
     user = request.session['email']
-    return render(request,"summary.html",{'session': user})
+    cobj = register.objects.get(Email =user)
+    cartobj = cart.objects.filter(customerid = cobj.id)
+    totalbill = 0
 
-def hello(request):
-    return HttpResponse("Hello world")
+    for i in cartobj:
+        totalbill = i.totalamount + totalbill
+    return render(request,'summary.html',{'session': user,'petobj':cartobj,'totalbill':totalbill})
