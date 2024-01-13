@@ -3,13 +3,13 @@
 
 <body>
     {% block mycontent %}
-    <section style="background-color: rgb(178, 158, 90);">
+    <section style="background-color: #880e4f;">
         <div class="container py-5">
             <div class="row">
                 {% for i in petobj %}
                 <div class="col-md-12 col-lg-4 mb-4 mb-lg-0" >
 
-                    <div class="card text-black" style="border: red; border-width: 5px;">
+                    <div class="card text-black" style="border: #c51162; border-width: 5px;">
                         <img src="{{i.Image.url}}" class="card-img-top" alt="iPhone"
                             style="height: 350px; width: 350px; margin: auto;">
                         <div class="card-body">
@@ -18,19 +18,19 @@
                             </div>
 
                             <div class="text-center">
-                                <div class="p-3 mx-n3 mb-4" style="background-color: #def4ae;">
+                                <div class="p-3 mx-n3 mb-4" style="background-color: #c51162;" >
                                     <h5 class="mb-0">Breed : {{i.Breed}}</h5>
                                 </div>
 
                                 <div class="d-flex flex-column mb-4">
                                     <span>Gender : {{i.Gender}}</span>
                                 </div>
-                                <div class="row r4" >
+                                <div class="row r4" style=" padding-left: 35px; "  >
                                     <form method="POST" action="{% url 'cart' %}">
                                         {% csrf_token %}
                                         <input type="hidden" value="{{i.id}}" name="pid">
-                                        <a class="btn btn-success flex-fill me" href="../petdetail/{{i.slug}}/" style="margin: 8px;" >View Details</a>
-                                        <button type="submit" class="btn btn-danger flex-fill ms-1" style="margin: 8px;" >Add ToCart</button>
+                                        <a class="btn btn-white flex-fill me" href="../petdetail/{{i.slug}}/" style="margin: 12px; border-color: #e53935; border-radius:10px; box-shadow: 0px 0px 2px 2px #c51162;" >View Details</a>
+                                        <button type="submit" class="btn btn-white flex-fill ms-1" style="margin: 8px; border-color: #e53935; border-radius:10px; box-shadow: 0px 0px 2px 2px #c51162;">Add ToCart </button>
                                     </form>
                                 </div>
                             </div>

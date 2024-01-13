@@ -3,7 +3,7 @@
     <head>
 <style>
     body {
-    color: #000;
+    color: white;
     overflow-x: hidden;
     height: 100%;
     background-color: #fff;
@@ -64,7 +64,7 @@ input, textarea {
     box-sizing: border-box;
     border: 1px solid #F3E5F5;
     font-size: 15px !important;
-    color: #000 !important;
+    color: white !important;
     font-weight: 300;
 }
 
@@ -72,7 +72,7 @@ input:focus, textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 1px solid #9FA8DA;
+    border: 1px solid #c51162;;
     outline-width: 0;
     font-weight: 400;
 }
@@ -88,7 +88,7 @@ button:focus {
     width: 80px;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid #673AB7;
+    border: 1px solid #c51162;;
     margin: 10px 20px 10px 0px;
     cursor: pointer;
     box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.2);
@@ -116,7 +116,7 @@ button:focus {
 .btn-blue {
     border: none;
     border-radius: 10px;
-    background-color: #673AB7;
+    background-color: #c51162;;
     color: #fff;
     padding: 8px 15px;
     margin: 20px 0px;
@@ -124,7 +124,7 @@ button:focus {
 }
 
 .btn-blue:hover {
-    background-color: #311B92;
+    background-color: #c51162;;
     color: #fff;
 }
 
@@ -167,7 +167,7 @@ button:focus {
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
-                        <tr style="background-color: #bf8cee;">
+                        <tr style="background-color: #c51162; color: #fff;">
                           <th scope="col" class="h5">Shopping Bag</th>
                           <th scope="col">Species</th>
                           <th scope="col">Quantity</th>
@@ -176,11 +176,11 @@ button:focus {
                       </thead>
                       <tbody>
                         {% for i in petobj %}
-                        <tr style="background-color: bisque;">
+                        <tr style="background-color: white;">
                           <th scope="row">
                             <div class="d-flex align-items-center">
                               <img src="{{i.productid.Image.url}}" class="img-fluid rounded-3"
-                                style="width: 150px;" alt="Book">
+                                style="width: 150px; border: 2px; border-style: solid; border-color: #FF5252;" alt="Book">
                               <div class="flex-column ms-4" style="padding-left: 20px;">
                                 <p class="mb-2">{{i.productid.Name}}</p>
                                 <p class="mb-0">{{i.productid.Breed}}</p>
@@ -197,12 +197,12 @@ button:focus {
                               <td class="align-middle" >
                                 <div class="d-flex flex-row" >
                                   <div class="d-flex flex-row" >
-                                    <span style="border-color: bisque; width: 18px; margin-top: 20px;">{{i.quantity}}</span>
+                                    <span style="border-color: white; width: 18px; margin-top: 20px;">{{i.quantity}}</span>
                                   </div>
                                   <div class="d-flex flex-column " style="margin-bottom: 18px;" >
-                                    <button type="submit"  name="buttonquantity" value="+" style="background-color: bisque; border-color: bisque;">
+                                    <button type="submit"  name="buttonquantity" value="+" style="background-color: white; border-color:white;">
                                       ▴</button>
-                                      <button type="submit"  name="buttonquantity" value="-" style="background-color: bisque; border-color: bisque;">
+                                      <button type="submit"  name="buttonquantity" value="-" style="background-color: white; border-color: white;">
                                         ▾</button>
                                       </div>
                                     </div>
@@ -219,7 +219,7 @@ button:focus {
                     <form method="POST" action="{% url 'summary' %}">
                       {% csrf_token %}
                       <input type="hidden" name="pid" value="{{i.productid.id}}">
-                    <div class="text-center" ><button type="submit" class="btn btn-success flex-fill ms-1">Place Order</button></div>
+                    <div class="text-center" ><button type="submit" class="p-3 mb-2 bg-light text-dark" style="margin: 8px; border-color: #e53935; border-radius:10px; box-shadow: 0px 0px 2px 2px #c51162;">Place Order</button></div>
                     </form>
                   </div>
                 </div>

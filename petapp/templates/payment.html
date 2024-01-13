@@ -1,0 +1,134 @@
+{% extends 'main.html' %}
+<html>
+<body>
+    {% block mycontent %}
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    
+    <script>
+        var amount= 2000
+     function initPayPalButton() {
+        document.getElementById("paypapl").style.visibility ="hidden";
+paypal.Buttons({
+
+  style: {
+
+    shape: 'rect',
+
+    color: 'gold',
+
+    layout: 'vertical',
+
+    label: 'paypal',
+
+   
+
+  },
+
+
+
+  createOrder: function(data, actions) {
+
+    return actions.order.create({
+
+      purchase_units: [{"amount":{"currency_code":"USD","value":amount}}]
+
+    });
+
+  },
+
+
+
+  onApprove: function(data, actions) {
+
+    return actions.order.capture().then(function(orderData) {
+
+     console.log(orderData)
+
+      // Full available details
+
+      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+
+      
+
+      // Show a success message within this page, e.g.
+
+      const element = document.getElementById('paypal-button-container');
+
+      element.innerHTML = '';
+
+      element.innerHTML = '<h3>Thank you for your payment!</h3>'+orderData['id'];
+      var data = orderData['id']
+      const dsubmit = document.getElementById('oid');
+      dsubmit.value = data;
+
+
+    //  document.getElementById("datasubmit").form.submit();
+
+       window.location.href='http://localhost:8000/payments/'+data
+
+     
+
+
+     
+
+    });
+
+  },
+
+
+
+  onError: function(err) {
+
+    console.log(err);
+
+  }
+
+}).render('#paypal-button-container');
+
+}
+
+
+
+</script>
+<div class="container">
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-danger">Your Order Summary</span>
+        </h4>
+        {% for i in petobj %}
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Name : {{i.productid.Name}}</h6>
+              <small class="text-muted">Breed : {{i.productid.Breed}}</small><br>
+              <small class="text-muted">Quantity : {{i.quantity}}</small><br>
+              <small class="text-muted">Total : {{i.totalamount}}</small>
+            </div>
+          </li>
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total Bill : </span>
+            <strong>Rs. {{totalbill}}</strong>
+          </li>
+          
+            <button onclick="initPayPalButton()" name="paypapl" id="paypapl" class="w-100 btn btn-primary btn-lg">Do payment</button>
+            <div class="sale my-3"> <div id="paypal-button-container"></div> </div>
+        </ul>
+
+        
+      </div>
+      
+    </div>
+
+
+  
+</div>
+
+
+    
+{% endblock %}
+</body>
+</html>

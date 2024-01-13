@@ -31,10 +31,12 @@ urlpatterns = [
     path('register/',views.registration,name='register'),
     path('services/',views.services, name='services'),
     path('login/',views.login,name="login"),
+    path('logout/',views.logout,name="logout"),
     path('cart1/',views.addcart,name="cart"),
     path('viewcart/',views.viewcart,name="viewcart"),
     path('quantity/',views.quantity,name="quant"),
     path('summary/',views.summarypage,name="summary"),
+    path('payment/',views.paymentpage,name="payment"),
 ]
 
 if settings.DEBUG:
