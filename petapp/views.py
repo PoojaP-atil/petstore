@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView,DetailView, CreateView
-from petapp.models import pet,register,cart
+from petapp.models import pet,register,cart,order,orderdetails
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.http import HttpResponse
@@ -132,95 +132,33 @@ def summarypage(request):
         totalbill = i.totalamount + totalbill
     return render(request,'summary.html',{'session': user,'petobj':cartobj,'totalbill':totalbill})
 
-def paymentpage2(request):
-    user = request.session['email']
-    cobj = register.objects.get(Email=user)
-    Name = request.POST.get('name')
-    Address= request.POST.get('address')
-    Phoneno = int(request.POST.get('phoneno'))
-    City = request.POST.get('city')
-    State = request.POST.get('state')
-    Pincode = int(request.POST.get('pincode'))
-    Totalbillamount = float(request.POST.get('totalbillamount'))
-    orderobj = order(name= Name, city = City, state=State, address = Address, phoneno = Phoneno, pincode = Pincode, totalbillamount = Totalbillamount)
-    orderobj.save()
-
-    dateobj = date.today()
-
-    print(dateobj)
-    datedata = str(dateobj).replace('-','')
-
-    orderno = str(orderobj.id) + datedata
-    orderobj.ordernumber = orderno
-    orderobj.save()
-
-    cartobj = cart.objects.filter(customerid = cobj.id)
-
-    for i in cartobj:
-        orderdetailobj = orderdetail(ordernumber = orderno, productid = i.productid,customerid = i.customerid,quantity = i.quantity,totalprice = i.totalamount)
-        orderdetailobj.save()
-        i.delete()
-
-    orderdetialobjectdisplay = orderdetail.objects.filter()
-    return render(request,'payment.html',{'orderobj':orderobj})
-
-
-def paymentpage1(request):
-        user = request.session['email']
-        cobj = register.objects.get(Email =user)
-        cartobj = cart.objects.filter(customerid = cobj.id)
-        totalbill = 0
-        for i in cartobj:
-            totalbill = i.totalamount + totalbill
-            return render(request,'payment.html',{'session': user,'petobj':cartobj,'totalbill':totalbill})
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from datetime import date
-from .models import register, order, cart, orderdetails  # Import your models
-
-
-
 def paymentpage(request):
     user = request.session['email']
     cobj = register.objects.get(Email=user)
-
     name = request.POST.get('name')
-    address = request.POST.get('address')
+    address= request.POST.get('address')
     phoneno = int(request.POST.get('phoneno'))
     city = request.POST.get('city')
     state = request.POST.get('state')
     pincode = int(request.POST.get('pincode'))
-    totalbillamount_str = request.POST.get('totalbillamount')
-    if totalbillamount_str is not None:
-        Totalbillamount = float(totalbillamount_str)
-    else:
-        # Handle the case where 'totalbillamount' is not present
-        Totalbillamount = 0.0 
-
-    # Create and save the order object
-    orderobj = order(Name=name, City=city, State=state, Address=address, PhoneNo=phoneno, Pincode=pincode, totalbillamount=Totalbillamount)
-    orderobj.save()
-
+    Totalbillamount = request.POST.get('totalbillamount')
+    bill = float(Totalbillamount)
    
-    # Generate the order number
-    dateobj = date.today()
-    datedata = str(dateobj).replace('-', '')
-    orderno = str(orderobj.id) + datedata
-    orderobj.ordernumber = orderno
-    orderobj.save()
+    orderobj = order(Name= name, City = city, State=state, Address = address, PhoneNo = phoneno, Pincode = pincode, totalbillamount = bill)
+  
+    cartobj = cart.objects.filter(customerid = cobj.id)
+    totalbill = 0
 
-    # Retrieve items from the cart
-    cartobj = cart.objects.filter(customerid=cobj.id)
-
-    # Save order details and delete items from the cart
     for i in cartobj:
-        orderdetailobj = orderdetails(ordernumber=orderno, productid=i.productid, customerid=i.customerid, quantity=i.quantity, totalprice=i.totalamount)
+        dateobj = date.today()
+        datedata = str(dateobj).replace('-','')
+        orderno = str(orderobj.id) + datedata
+        totalbill = i.totalamount + totalbill
+        orderobj.ordernumber = orderno
+        orderdetailobj = orderdetails(ordernumber = orderno, productid = i.productid,customerid = i.customerid,quantity = i.quantity,totalprice = i.totalamount)
+        orderobj.save()
         orderdetailobj.save()
         i.delete()
 
-    # Display a success message using Django's messages framework
-    messages.success(request, f'Order placed successfully! Your order number is {orderno}. ')
-
-    # Redirect to a thank you page or any other appropriate page
-    return redirect('../petlist/')
+    orderdetialobjectdisplay = orderdetails.objects.filter()
+    return render(request,'payment.html',{'orderobj':orderobj,'session': user,'petobj':cartobj,'totalbill':totalbill})
