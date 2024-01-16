@@ -3,95 +3,102 @@
 <body>
     {% block mycontent %}
     <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-    
     <script>
-        var amount= {{totalbill}}
-     function initPayPalButton() {
-        document.getElementById("paypapl").style.visibility ="hidden";
-paypal.Buttons({
+              
+          
+      </script>
+        <!-- Include the PayPal JavaScript SDK -->
+        <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    
+        <script>
+            var amount= {{totalbill}}
+         function initPayPalButton() {
+            document.getElementById("paypapl").style.visibility ="hidden";
+    paypal.Buttons({
+    
+      style: {
+    
+        shape: 'rect',
+    
+        color: 'gold',
+    
+        layout: 'vertical',
+    
+        label: 'paypal',
+    
+       
+    
+      },
+    
+    
+    
+      createOrder: function(data, actions) {
+    
+        return actions.order.create({
+    
+          purchase_units: [{"amount":{"currency_code":"USD","value":amount}}]
+    
+        });
+    
+      },
+    
+    
+    
+      onApprove: function(data, actions) {
+    
+        return actions.order.capture().then(function(orderData) {
+    
+         console.log(orderData)
+    
+          // Full available details
+    
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                      var data = orderData['id']
+            //           var f = document.createElement('form');
+            // f.action='http://localhost:8000/paymentsucess/';
+            // f.method='GET';
+            // f.target='_blank';
 
-  style: {
+            // var i=document.createElement('input');
+            // i.type='hidden';
+            // i.name='fragment';
+            // i.value=orderData['id'];
+            // f.appendChild(i);
 
-    shape: 'rect',
+            // document.body.appendChild(f);
 
-    color: 'gold',
-
-    layout: 'vertical',
-
-    label: 'paypal',
-
-   
-
-  },
-
-
-
-  createOrder: function(data, actions) {
-
-    return actions.order.create({
-
-      purchase_units: [{"amount":{"currency_code":"USD","value":amount}}]
-
-    });
-
-  },
-
-
-
-  onApprove: function(data, actions) {
-
-    return actions.order.capture().then(function(orderData) {
-
-     console.log(orderData)
-
-      // Full available details
-
-      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-
-      
-
-      // Show a success message within this page, e.g.
-
-      const element = document.getElementById('paypal-button-container');
-
-      element.innerHTML = '';
-
-      element.innerHTML = '<h3>Thank you for your payment!</h3>'+orderData['id'];
-      var data = orderData['id']
-      const dsubmit = document.getElementById('oid');
-      dsubmit.value = data;
-
-
-    //  document.getElementById("datasubmit").form.submit();
-
-       window.location.href='http://localhost:8000/payments/'+data
-
+            // f.submit();
+            odata = {{orderobj.ordernumber}};
+         window.location.replace("orderplaced/"+data+"/"+odata+"/");
+          
+    
      
-
-
-     
-
-    });
-
-  },
-
-
-
-  onError: function(err) {
-
-    console.log(err);
-
-  }
-
-}).render('#paypal-button-container');
-
-}
-
-
-
-</script>
+    
+         
+    
+    
+         
+    
+        });
+    
+      },
+    
+    
+    
+      onError: function(err) {
+    
+        console.log(err);
+    
+      }
+    
+    }).render('#paypal-button-container');
+    
+    }
+    
+    
+    
+    </script>
+    
 <div class="container">
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">

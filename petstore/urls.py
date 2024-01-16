@@ -37,6 +37,8 @@ urlpatterns = [
     path('quantity/',views.quantity,name="quant"),
     path('summary/',views.summarypage,name="summary"),
     path('payment/',views.paymentpage,name="payment"),
+    path('orderplaced/<str:tid>/<str:orderid>/', views.orderplaced, name='orderplaced')
+
 ]
 
 if settings.DEBUG:
