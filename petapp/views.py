@@ -160,7 +160,6 @@ def paymentpage(request):
     return render(request,'payment.html',{'orderobj':orderobj,'session': user,'petobj':cartobj,'totalbill':totalbill})
 
 def orderplaced(request,tid,orderid):
-    if request.method=='GET':
         user = request.session['email']
         cobj = register.objects.get(Email=user)
         cartobj = cart.objects.filter(customerid = cobj.id)
@@ -173,7 +172,5 @@ def orderplaced(request,tid,orderid):
             orderdetailobj = orderdetails(paymentid = paymentobj,ordernumber = orderid, productid = i.productid,customerid = i.customerid,quantity = i.quantity,totalprice = i.totalamount)
             orderdetailobj.save()
             i.delete()
-        payobj = orderdetails.objects.filter(customerid = cobj.id)
-        for i in payobj:
-            print(i.customerid.Name)
+        payobj = orderdetails.objects.filter(ordernumber = orderid)
         return render(request,'orderplaced.html',{'session': user,'payobj': payobj})
