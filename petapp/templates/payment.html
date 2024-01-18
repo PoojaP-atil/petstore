@@ -15,7 +15,6 @@
          function initPayPalButton() {
             document.getElementById("paypapl").style.visibility ="hidden";
     paypal.Buttons({
-    
       style: {
     
         shape: 'rect',
@@ -26,7 +25,7 @@
     
         label: 'paypal',
     
-       
+      
     
       },
     
@@ -55,7 +54,7 @@
           console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                       var data = orderData['id']
             //           var f = document.createElement('form');
-            // f.action='http://localhost:8000/paymentsucess/';
+            // f.action='http://localhost:8000/orderplaced/';
             // f.method='GET';
             // f.target='_blank';
 
@@ -69,7 +68,7 @@
 
             // f.submit();
             odata = {{orderobj.ordernumber}};
-         window.location.replace("orderplaced/"+data+"/"+odata+"/");
+         window.location.replace("http://127.0.0.1:8000/orderplaced/"+data+"/"+odata+"/");
           
     
      

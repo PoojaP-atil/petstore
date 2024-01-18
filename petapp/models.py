@@ -58,6 +58,8 @@ class order(models.Model):
     Pincode = models.IntegerField()
     PhoneNo = models.BigIntegerField()
     totalbillamount = models.FloatField() 
+    ordernumber = models.CharField(max_length=200 , default = 0)
+
 
     class Meta:
         db_table = "order1"
@@ -76,9 +78,10 @@ class orderdetails(models.Model):
     paymentid = models.ForeignKey(payment,on_delete = models.CASCADE, null = True)
     customerid = models.ForeignKey(register,on_delete = models.CASCADE)
     productid = models.ForeignKey(pet, on_delete = models.CASCADE)
-    ordernumber = models.CharField(max_length=200 , default = 0)
     quantity = models.IntegerField()
     totalprice = models.FloatField()
+    ordernumber = models.CharField(max_length=200 , default = 0)
+
     
     class Meta:
         db_table = "oderdetails"

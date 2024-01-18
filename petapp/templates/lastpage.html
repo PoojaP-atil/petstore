@@ -1,0 +1,104 @@
+{% extends 'main.html' %}
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #880e4f;
+            height: 100vh;
+            display: block;
+            justify-content: center;
+            align-items: center
+        }
+
+        .modal-body {
+            background-color: #fff;
+            border-color: #fff;
+
+        }
+
+
+        .close {
+            color: #000;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+
+        .theme-color {
+
+            color: #880e4f;
+        }
+
+        hr.new1 {
+            border-top: 2px dashed #fff;
+            margin: 0.4rem 0;
+        }
+
+
+        .btn-primary {
+            color: #fff;
+            background-color: #880e4f;
+            border-color: #880e4f;
+            padding: 12px;
+            padding-right: 30px;
+            padding-left: 30px;
+            border-radius: 1px;
+            font-size: 17px;
+        }
+
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #c51162;
+            border-color: #c51162;
+            padding: 12px;
+            padding-right: 30px;
+            padding-left: 30px;
+            border-radius: 1px;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    {% block mycontent %}
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body ">
+                    <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
+                 
+                    {% for i in payobj %}
+                    <div class="px-4 py-5">
+
+                        <h5 class="text-uppercase">{{i.customerid.Name}}</h5>
+                        <h2 class="mt-5 theme-color mb-5">Thanks for your order</h2>
+
+                        <span class="theme-color">Payment Summary</span>
+                        <div class="mb-3">
+                            <hr class="new1">
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <span class="font-weight-bold">{{i.productid.Name}}</span>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <span class="font-weight-bold">Total Amount Paid : </span>
+                            <span class="font-weight-bold theme-color">Rs. {{i.totalamount}}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
+</html>

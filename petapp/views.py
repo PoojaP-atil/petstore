@@ -145,51 +145,35 @@ def paymentpage(request):
     bill = float(Totalbillamount)
    
     orderobj = order(Name= name, City = city, State=state, Address = address, PhoneNo = phoneno, Pincode = pincode, totalbillamount = bill)
-  
+    orderobj.save()
+    dateobj = date.today()
+    datedata = str(dateobj).replace('-','')
+    orderno = str(orderobj.id) + datedata
+    orderobj.ordernumber = orderno
+    orderobj.save()
+    
     cartobj = cart.objects.filter(customerid = cobj.id)
     totalbill = 0
-
     for i in cartobj:
-        dateobj = date.today()
-        datedata = str(dateobj).replace('-','')
-        orderno = str(orderobj.id) + datedata
         totalbill = i.totalamount + totalbill
-        orderobj.ordernumber = orderno
-        orderobj.save()
 
     return render(request,'payment.html',{'orderobj':orderobj,'session': user,'petobj':cartobj,'totalbill':totalbill})
 
 def orderplaced(request,tid,orderid):
-    user = request.session['email']
-    cobj = register.objects.get(Email=user)
-    cartobj = cart.objects.filter(customerid = cobj.id)
-    totalbill = i.totalamount + totalbill
+    if request.method=='GET':
+        user = request.session['email']
+        cobj = register.objects.get(Email=user)
+        cartobj = cart.objects.filter(customerid = cobj.id)
 
-    orderobj = orderdetails.objects.get(orderno = orderid)
-    paymentobj = payment(transactionid = tid, paymentstatus='paid',customerid=cobj,orderid = orderobj)
-    paymentobj.save()
-    
-    for i in cartobj:
-        orderdetailobj = orderdetails(paymentid = paymentobj,ordernumber = orderid, productid = i.productid,customerid = i.customerid,quantity = i.quantity,totalprice = i.totalamount)
-        orderdetailobj.save()
-        i.delete()
-    return render(request,'order_placed.html',{'session': user,'orderno' : orderobj ,'totalbill' : totalbill})
-
-def orderplaced1(request, tid, orderid):
-    print("Order Placed View Reached")
-    user = request.session['email']
-    cobj = register.objects.get(Email=user)
-    cartobj = cart.objects.filter(customerid=cobj.id)
-    totalbill = 0
-    for i in cartobj:
-            totalbill = totalbill + i.totalamount
-    orderobj = orderdetails.objects.get(orderno=orderid)
-    paymentobj = payment(transactionid=tid, paymentstatus='paid', customerid=cobj, orderid=orderobj, paymentmode = 'Paypal')
-    paymentobj.save()
-
-    for i in cartobj:
-        orderdetailobj = orderdetails(paymentid=paymentobj, ordernumber=orderid, productid=i.productid, customerid=i.customerid, quantity=i.quantity, totalprice=i.totalamount)
-        orderdetailobj.save()
-
-    cartobj.delete()
-    return render(request, 'order_placed.html')
+        orderobj = order.objects.get(ordernumber = orderid)
+        paymentobj = payment(transactionid = tid, paymentstatus='paid',customerid=cobj,orderid = orderobj)
+        paymentobj.save()
+        
+        for i in cartobj:
+            orderdetailobj = orderdetails(paymentid = paymentobj,ordernumber = orderid, productid = i.productid,customerid = i.customerid,quantity = i.quantity,totalprice = i.totalamount)
+            orderdetailobj.save()
+            i.delete()
+        payobj = orderdetails.objects.filter(customerid = cobj.id)
+        for i in payobj:
+            print(i.customerid.Name)
+        return render(request,'orderplaced.html',{'session': user,'payobj': payobj})
